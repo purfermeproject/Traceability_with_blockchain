@@ -100,7 +100,7 @@ export default function ConsumerJourneyPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#020617] text-slate-300 antialiased font-sans flex justify-center">
+      <div className="min-h-screen bg-[#1a0b2e] text-slate-300 antialiased font-sans flex justify-center">
         <div className="w-full max-w-[480px] bg-[#2D0E3D] min-h-screen flex items-center justify-center p-6 text-center shadow-2xl">
           <div className="space-y-4">
             <div className="w-12 h-12 border-4 border-[#FFA500] border-t-transparent rounded-full animate-spin mx-auto" />
@@ -113,7 +113,7 @@ export default function ConsumerJourneyPage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-[#020617] text-slate-300 antialiased font-sans flex justify-center">
+      <div className="min-h-screen bg-[#1a0b2e] text-slate-300 antialiased font-sans flex justify-center">
         <div className="w-full max-w-[480px] bg-[#2D0E3D] min-h-screen flex items-center justify-center p-6 text-center shadow-2xl">
           <div className="bg-white/5 border border-white/10 p-8 rounded-[2rem] max-w-sm backdrop-blur-xl">
             <Info className="w-12 h-12 text-[#FFD700] mx-auto mb-4" />
@@ -133,7 +133,7 @@ export default function ConsumerJourneyPage() {
 
   return (
     <div className="min-h-screen bg-[#1a0b2e] text-slate-200 antialiased font-sans flex justify-center selection:bg-[#FFA500]/30 selection:text-white">
-      <div className="w-full max-w-[480px] bg-[#2D0E3D] min-h-screen shadow-[0_0_100px_rgba(45,14,61,0.5)] relative overflow-hidden">
+      <div className="w-full max-w-[480px] bg-gradient-to-b from-[#3a1250] to-[#2D0E3D] min-h-screen shadow-[0_0_100px_rgba(45,14,61,0.5)] relative overflow-hidden">
         
         {/* Ambient Glow Orbs - Shifted to Deep Purple/Yellow hues */}
         <div className="absolute top-[10%] -left-[20%] w-[80%] aspect-square bg-[#FFA500]/10 rounded-full blur-[120px] pointer-events-none" />
@@ -495,7 +495,7 @@ export default function ConsumerJourneyPage() {
               <p className="text-[8px] text-slate-300 uppercase font-bold tracking-widest italic">© 2026 PURFERME ORGANICS LIMITED</p>
             </div>
           </footer>
-        </section>>
+        </section>
       </div>
     </div>
   );
