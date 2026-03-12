@@ -10,8 +10,11 @@ import {
     ClipboardList,
     ShieldCheck,
     Users,
+    Beaker,
     LogOut,
-    ChevronRight
+    ChevronRight,
+    QrCode,
+    User as UserIcon
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -25,11 +28,14 @@ const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, roles: ['SUPER_ADMIN', 'ADMIN', 'QA'] },
     { name: 'Farmers', href: '/farmers', icon: Sprout, roles: ['SUPER_ADMIN', 'ADMIN', 'QA'] },
     { name: 'Vendors', href: '/vendors', icon: Truck, roles: ['SUPER_ADMIN', 'ADMIN', 'QA'] },
+    { name: 'Ingredients', href: '/ingredients', icon: Beaker, roles: ['SUPER_ADMIN', 'ADMIN', 'QA'] },
     { name: 'Crop Cycles', href: '/crop-cycles', icon: ClipboardList, roles: ['SUPER_ADMIN', 'ADMIN', 'QA'] },
     { name: 'Recipes', href: '/recipes', icon: Package, roles: ['SUPER_ADMIN', 'ADMIN', 'QA'] },
     { name: 'Batches', href: '/batches', icon: ShieldCheck, roles: ['SUPER_ADMIN', 'ADMIN', 'QA'] },
+    { name: 'QR Management', href: '/qr-management', icon: QrCode, roles: ['SUPER_ADMIN', 'ADMIN'] },
     { name: 'Admin Logs', href: '/audit-logs', icon: ClipboardList, roles: ['SUPER_ADMIN'] },
     { name: 'User Management', href: '/users', icon: Users, roles: ['SUPER_ADMIN'] },
+    { name: 'My Profile', href: '/profile', icon: UserIcon, roles: ['SUPER_ADMIN', 'ADMIN', 'QA', 'FARMER'] },
 ];
 
 export default function Sidebar() {
@@ -42,7 +48,7 @@ export default function Sidebar() {
 
     return (
         <div className="flex flex-col h-screen w-64 glass-dark border-r border-slate-800 text-slate-300">
-            <div className="p-6 flex items-center gap-3">
+            <div className="p-6 flex items-center gap-3 shrink-0">
                 <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
                     <Sprout className="text-white w-6 h-6" />
                 </div>
@@ -51,7 +57,7 @@ export default function Sidebar() {
                 </h1>
             </div>
 
-            <nav className="flex-1 px-4 space-y-1">
+            <nav className="flex-1 px-4 space-y-1 overflow-y-auto">
                 {filteredItems.map((item) => {
                     const isActive = pathname === item.href;
                     return (

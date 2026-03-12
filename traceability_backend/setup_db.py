@@ -22,7 +22,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 
 def create_db(pg_password: str) -> None:
-    print("⏳ Connecting to PostgreSQL as 'postgres'...")
+    print("Connecting to PostgreSQL as 'postgres'...")
     try:
         conn = psycopg2.connect(
             host="localhost",
@@ -32,7 +32,7 @@ def create_db(pg_password: str) -> None:
             database="postgres",
         )
     except psycopg2.OperationalError as e:
-        print(f"❌ Connection failed: {e}")
+        print(f"Connection failed: {e}")
         print("   Make sure PostgreSQL is running and the password is correct.")
         sys.exit(1)
 
@@ -42,19 +42,19 @@ def create_db(pg_password: str) -> None:
     # Create role (ignore if exists)
     try:
         cur.execute("CREATE USER purferme WITH PASSWORD 'password';")
-        print("✅ Created user 'purferme'")
+        print("Created user 'purferme'")
     except psycopg2.errors.DuplicateObject:
-        print("ℹ️  User 'purferme' already exists — skipped")
+        print(" User 'purferme' already exists - skipped")
 
     # Create database (ignore if exists)
     try:
         cur.execute("CREATE DATABASE purferme_db OWNER purferme;")
-        print("✅ Created database 'purferme_db'")
+        print("Created database 'purferme_db'")
     except psycopg2.errors.DuplicateDatabase:
-        print("ℹ️  Database 'purferme_db' already exists — skipped")
+        print(" Database 'purferme_db' already exists - skipped")
 
     cur.execute("GRANT ALL PRIVILEGES ON DATABASE purferme_db TO purferme;")
-    print("✅ Granted privileges")
+    print("Granted privileges")
     cur.close()
     conn.close()
 
@@ -62,7 +62,7 @@ def create_db(pg_password: str) -> None:
 def patch_env_secret_key() -> None:
     env_path = Path(__file__).parent / ".env"
     if not env_path.exists():
-        print("⚠️  .env not found — skipping SECRET_KEY patch")
+        print("  .env not found - skipping SECRET_KEY patch")
         return
 
     content = env_path.read_text(encoding="utf-8")
@@ -72,9 +72,9 @@ def patch_env_secret_key() -> None:
         new_key = secrets.token_hex(64)  # 128-char hex string
         content = content.replace(placeholder, new_key)
         env_path.write_text(content, encoding="utf-8")
-        print(f"✅ Generated & saved new SECRET_KEY to .env")
+        print(f"Generated & saved new SECRET_KEY to .env")
     else:
-        print("ℹ️  SECRET_KEY already set — skipped")
+        print("SECRET_KEY already set - skipped")
 
 
 if __name__ == "__main__":
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     create_db(args.pg_password)
     patch_env_secret_key()
 
-    print("\n🎉 Setup complete! Next steps:")
+    print("\nSetup complete! Next steps:")
     print("   1. Run Alembic:  alembic revision --autogenerate -m 'initial'")
     print("   2. Apply:        alembic upgrade head")
     print("   3. Start server: .venv\\Scripts\\uvicorn app.main:app --reload")

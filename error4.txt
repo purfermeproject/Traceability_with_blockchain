@@ -1,0 +1,250 @@
+﻿purferme_api  | 2026-03-12 18:44:58,363 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE batches.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:44:58,363 INFO sqlalchemy.engine.Engine [cached since 14.86s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:44:58,364 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:44:58,365 INFO sqlalchemy.engine.Engine [cached since 14.86s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:44:58,367 INFO sqlalchemy.engine.Engine UPDATE batches SET forensic_report_url=$1::VARCHAR, updated_at=now() WHERE batches.id = $2::VARCHAR
+purferme_api  | 2026-03-12 18:44:58,368 INFO sqlalchemy.engine.Engine [generated in 0.00017s] ('https://drive.google.com/file/d/1NDudCp7d9WsN9waUiIRhfNx9DZqrY9UP/view?usp=sharing', '63a9f127-0ae1-444c-bc2b-c878f36de53b')
+purferme_api  | 2026-03-12 18:44:58,369 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | 2026-03-12 18:44:58,377 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:44:58,378 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE batches.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:44:58,378 INFO sqlalchemy.engine.Engine [generated in 0.00016s] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:44:58,381 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.id AS batch_ingredients_id, batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE $1::VARCHAR = batch_ingredients.batch_id
+purferme_api  | 2026-03-12 18:44:58,381 INFO sqlalchemy.engine.Engine [generated in 0.00014s] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:44:58,398 INFO sqlalchemy.engine.Engine INSERT INTO audit_logs (id, user_id, user_name, user_email, action, table_name, record_id, details, timestamp) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE)
+purferme_api  | 2026-03-12 18:44:58,398 INFO sqlalchemy.engine.Engine [cached since 14.89s ago] ('e13e8812-146b-438a-ad6c-a9bd149a84df', 'd668dc21-dbb4-4eb5-91aa-5d2db75ed236', 'Vanshika', 'vanshika@purfermeproject.com', 'UPDATE_COMPLIANCE', 'batches', '63a9f127-0ae1-444c-bc2b-c878f36de53b', '{"changes": {"forensic_report_url": "https://drive.google.com/file/d/1NDudCp7d9WsN9waUiIRhfNx9DZqrY9UP/view?usp=sharing", "ingredients": [{"ingredien ... (130 characters truncated) ... sN9waUiIRhfNx9DZqrY9UP/view?usp=sharing"}, {"ingredient_id": "8fb1dd88-f74e-44f6-809e-b6cac9a3d77a", "coa_status": "NOT_REQUIRED", "coa_link": ""}]}}', datetime.datetime(2026, 3, 12, 18, 44, 58, 397900, tzinfo=datetime.timezone.utc))
+purferme_api  | 2026-03-12 18:44:58,401 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:38224 - "PATCH /api/v1/batches/63a9f127-0ae1-444c-bc2b-c878f36de53b/compliance HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:44:58,407 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:44:58,408 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:44:58,408 INFO sqlalchemy.engine.Engine [cached since 1673s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:44:58,410 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE batches.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:44:58,410 INFO sqlalchemy.engine.Engine [cached since 14.91s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:44:58,411 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:44:58,411 INFO sqlalchemy.engine.Engine [cached since 14.91s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:44:58,412 INFO sqlalchemy.engine.Engine SELECT recipe_ingredients.id, recipe_ingredients.recipe_id, recipe_ingredients.ingredient_id, recipe_ingredients.expected_percentage, recipe_ingredients.coa_status, recipe_ingredients.coa_link 
+purferme_api  | FROM recipe_ingredients 
+purferme_api  | WHERE recipe_ingredients.recipe_id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:44:58,412 INFO sqlalchemy.engine.Engine [cached since 10.51s ago] ('0e86e0b9-d0f7-4f41-8ea2-8c48afad59af',)
+purferme_api  | 2026-03-12 18:44:58,413 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:38224 - "GET /api/v1/batches/63a9f127-0ae1-444c-bc2b-c878f36de53b/review HTTP/1.1" 200 OK
+purferme_api  | INFO:     172.18.0.1:50238 - "OPTIONS /api/v1/batches/63a9f127-0ae1-444c-bc2b-c878f36de53b/lock HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:45:09,210 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:45:09,211 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:09,211 INFO sqlalchemy.engine.Engine [cached since 1684s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:45:09,213 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE batches.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:09,213 INFO sqlalchemy.engine.Engine [cached since 25.71s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:45:09,215 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:45:09,215 INFO sqlalchemy.engine.Engine [cached since 25.71s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:45:09,219 INFO sqlalchemy.engine.Engine SELECT vendors.id AS vendors_id, vendors.company_name AS vendors_company_name, vendors.city AS vendors_city, vendors.state AS vendors_state, vendors.gst_no AS vendors_gst_no, vendors.is_active AS vendors_is_active, vendors.created_at AS vendors_created_at, vendors.updated_at AS vendors_updated_at 
+purferme_api  | FROM vendors 
+purferme_api  | WHERE vendors.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:09,219 INFO sqlalchemy.engine.Engine [generated in 0.00047s] ('b7e7bd54-0bd9-40da-8de5-da1f0241e0fa',)
+purferme_api  | 2026-03-12 18:45:09,222 INFO sqlalchemy.engine.Engine UPDATE batches SET status=$1::batchstatus, updated_at=now() WHERE batches.id = $2::VARCHAR
+purferme_api  | 2026-03-12 18:45:09,222 INFO sqlalchemy.engine.Engine [generated in 0.00026s] ('LOCKED', '63a9f127-0ae1-444c-bc2b-c878f36de53b')
+purferme_api  | 2026-03-12 18:45:09,225 INFO sqlalchemy.engine.Engine UPDATE batch_ingredients SET snapshot_vendor_name=$1::VARCHAR, snapshot_vendor_location=$2::VARCHAR, updated_at=now() WHERE batch_ingredients.id = $3::VARCHAR
+purferme_api  | 2026-03-12 18:45:09,225 INFO sqlalchemy.engine.Engine [generated in 0.00023s] ('MilletSource Agro Pvt Ltd', 'Coimbatore, Tamil Nadu', '9043878a-369a-46f6-b988-e8a240e20d34')
+purferme_api  | 2026-03-12 18:45:09,227 INFO sqlalchemy.engine.Engine INSERT INTO audit_logs (id, user_id, user_name, user_email, action, table_name, record_id, details, timestamp) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE)
+purferme_api  | 2026-03-12 18:45:09,227 INFO sqlalchemy.engine.Engine [cached since 25.72s ago] ('c63b84f2-2379-4a41-91b3-294603a46634', 'd668dc21-dbb4-4eb5-91aa-5d2db75ed236', 'Vanshika', 'vanshika@purfermeproject.com', 'LOCK_BATCH', 'batches', '63a9f127-0ae1-444c-bc2b-c878f36de53b', '{"batch_code": "BATCH-2026-001", "blockchain_hash": "705a6ee1e56ed74024ebb0e06c3b3aa77dfc8def9e02985ea64a404e774e5852"}', datetime.datetime(2026, 3, 12, 18, 45, 9, 226922, tzinfo=datetime.timezone.utc))
+purferme_api  | 2026-03-12 18:45:09,229 INFO sqlalchemy.engine.Engine UPDATE batches SET blockchain_hash=$1::VARCHAR, locked_at=$2::TIMESTAMP WITH TIME ZONE, updated_at=now() WHERE batches.id = $3::VARCHAR
+purferme_api  | 2026-03-12 18:45:09,229 INFO sqlalchemy.engine.Engine [generated in 0.00020s] ('705a6ee1e56ed74024ebb0e06c3b3aa77dfc8def9e02985ea64a404e774e5852', datetime.datetime(2026, 3, 12, 18, 45, 9, 226840, tzinfo=datetime.timezone.utc), '63a9f127-0ae1-444c-bc2b-c878f36de53b')
+purferme_api  | 2026-03-12 18:45:09,231 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:50238 - "POST /api/v1/batches/63a9f127-0ae1-444c-bc2b-c878f36de53b/lock HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:45:09,243 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:45:09,244 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:09,244 INFO sqlalchemy.engine.Engine [cached since 1684s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:45:09,245 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+purferme_api  | FROM (SELECT batches.id AS id, batches.batch_code AS batch_code, batches.product_id AS product_id, batches.recipe_id AS recipe_id, batches.status AS status, batches.blockchain_hash AS blockchain_hash, batches.locked_at AS locked_at, batches.forensic_report_url AS forensic_report_url, batches.created_at AS created_at, batches.updated_at AS updated_at 
+purferme_api  | FROM batches) AS anon_1
+purferme_api  | 2026-03-12 18:45:09,246 INFO sqlalchemy.engine.Engine [cached since 451.5s ago] ()
+purferme_api  | 2026-03-12 18:45:09,246 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  |  LIMIT $1::INTEGER OFFSET $2::INTEGER
+purferme_api  | 2026-03-12 18:45:09,246 INFO sqlalchemy.engine.Engine [cached since 451.4s ago] (50, 0)
+purferme_api  | 2026-03-12 18:45:09,247 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:50238 - "GET /api/v1/batches HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:45:11,419 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:45:11,419 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:11,419 INFO sqlalchemy.engine.Engine [cached since 1686s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:45:11,421 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE batches.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:11,421 INFO sqlalchemy.engine.Engine [cached since 27.92s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:45:11,423 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:45:11,423 INFO sqlalchemy.engine.Engine [cached since 27.92s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:45:11,424 INFO sqlalchemy.engine.Engine SELECT recipe_ingredients.id, recipe_ingredients.recipe_id, recipe_ingredients.ingredient_id, recipe_ingredients.expected_percentage, recipe_ingredients.coa_status, recipe_ingredients.coa_link 
+purferme_api  | FROM recipe_ingredients 
+purferme_api  | WHERE recipe_ingredients.recipe_id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:11,424 INFO sqlalchemy.engine.Engine [cached since 23.53s ago] ('0e86e0b9-d0f7-4f41-8ea2-8c48afad59af',)
+purferme_api  | 2026-03-12 18:45:11,425 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:50238 - "GET /api/v1/batches/63a9f127-0ae1-444c-bc2b-c878f36de53b/review HTTP/1.1" 200 OK
+purferme_api  | INFO:     172.18.0.1:50246 - "OPTIONS /api/v1/batches/63a9f127-0ae1-444c-bc2b-c878f36de53b/generate-hash HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:45:22,406 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:45:22,406 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:22,406 INFO sqlalchemy.engine.Engine [cached since 1697s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:45:22,408 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE batches.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:22,408 INFO sqlalchemy.engine.Engine [cached since 38.91s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:45:22,409 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:45:22,410 INFO sqlalchemy.engine.Engine [cached since 38.91s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:45:22,411 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:50246 - "POST /api/v1/batches/63a9f127-0ae1-444c-bc2b-c878f36de53b/generate-hash HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:45:28,353 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:45:28,354 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:28,354 INFO sqlalchemy.engine.Engine [cached since 1703s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:45:28,356 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+purferme_api  | FROM (SELECT batches.id AS id, batches.batch_code AS batch_code, batches.product_id AS product_id, batches.recipe_id AS recipe_id, batches.status AS status, batches.blockchain_hash AS blockchain_hash, batches.locked_at AS locked_at, batches.forensic_report_url AS forensic_report_url, batches.created_at AS created_at, batches.updated_at AS updated_at 
+purferme_api  | FROM batches) AS anon_1
+purferme_api  | 2026-03-12 18:45:28,356 INFO sqlalchemy.engine.Engine [cached since 470.6s ago] ()
+purferme_api  | 2026-03-12 18:45:28,357 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  |  LIMIT $1::INTEGER OFFSET $2::INTEGER
+purferme_api  | 2026-03-12 18:45:28,357 INFO sqlalchemy.engine.Engine [cached since 470.5s ago] (50, 0)
+purferme_api  | 2026-03-12 18:45:28,359 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:33014 - "GET /api/v1/batches HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:45:28,365 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:45:28,366 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:28,366 INFO sqlalchemy.engine.Engine [cached since 1703s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:45:28,367 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+purferme_api  | FROM (SELECT batches.id AS id, batches.batch_code AS batch_code, batches.product_id AS product_id, batches.recipe_id AS recipe_id, batches.status AS status, batches.blockchain_hash AS blockchain_hash, batches.locked_at AS locked_at, batches.forensic_report_url AS forensic_report_url, batches.created_at AS created_at, batches.updated_at AS updated_at 
+purferme_api  | FROM batches) AS anon_1
+purferme_api  | 2026-03-12 18:45:28,368 INFO sqlalchemy.engine.Engine [cached since 470.6s ago] ()
+purferme_api  | 2026-03-12 18:45:28,369 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  |  LIMIT $1::INTEGER OFFSET $2::INTEGER
+purferme_api  | 2026-03-12 18:45:28,369 INFO sqlalchemy.engine.Engine [cached since 470.5s ago] (50, 0)
+purferme_api  | 2026-03-12 18:45:28,370 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:33014 - "GET /api/v1/batches HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:45:28,383 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:45:28,383 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE lower(batches.batch_code) = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:28,383 INFO sqlalchemy.engine.Engine [cached since 44.92s ago] ('batch-2025-07',)
+purferme_api  | 2026-03-12 18:45:28,384 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:45:28,385 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE lower(batches.batch_code) = $1::VARCHAR
+purferme_api  | 2026-03-12 18:45:28,385 INFO sqlalchemy.engine.Engine [cached since 44.92s ago] ('batch-2026-001',)
+purferme_api  | 2026-03-12 18:45:28,387 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:45:28,387 INFO sqlalchemy.engine.Engine [cached since 44.89s ago] ('0a0d1641-0edd-499c-a63b-b54218521ae9',)
+purferme_api  | 2026-03-12 18:45:28,426 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | 2026-03-12 18:45:28,428 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:45:28,428 INFO sqlalchemy.engine.Engine [cached since 44.93s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | INFO:     172.18.0.1:53910 - "GET /api/v1/qr/BATCH-2025-07 HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:45:28,451 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:53916 - "GET /api/v1/qr/BATCH-2026-001 HTTP/1.1" 200 OK
+purferme_api  | INFO:     172.18.0.1:45394 - "GET /api/v1/public/batch/BATCH-2026-001 HTTP/1.1" 404 Not Found
+purferme_api  | 2026-03-12 18:48:30,453 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:48:30,453 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:48:30,454 INFO sqlalchemy.engine.Engine [cached since 1885s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:48:30,455 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:47542 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:48:30,513 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:48:30,513 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:48:30,514 INFO sqlalchemy.engine.Engine [cached since 1885s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:48:30,517 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:47542 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:48:30,519 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:48:30,520 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:48:30,520 INFO sqlalchemy.engine.Engine [cached since 1885s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:48:30,522 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+purferme_api  | FROM (SELECT batches.id AS id, batches.batch_code AS batch_code, batches.product_id AS product_id, batches.recipe_id AS recipe_id, batches.status AS status, batches.blockchain_hash AS blockchain_hash, batches.locked_at AS locked_at, batches.forensic_report_url AS forensic_report_url, batches.created_at AS created_at, batches.updated_at AS updated_at 
+purferme_api  | FROM batches) AS anon_1
+purferme_api  | 2026-03-12 18:48:30,522 INFO sqlalchemy.engine.Engine [cached since 652.8s ago] ()
+purferme_api  | 2026-03-12 18:48:30,524 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  |  LIMIT $1::INTEGER OFFSET $2::INTEGER
+purferme_api  | 2026-03-12 18:48:30,524 INFO sqlalchemy.engine.Engine [cached since 652.7s ago] (50, 0)
+purferme_api  | 2026-03-12 18:48:30,526 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | 2026-03-12 18:48:30,526 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:48:30,527 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:48:30,527 INFO sqlalchemy.engine.Engine [cached since 1885s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | INFO:     172.18.0.1:47558 - "GET /api/v1/batches HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:48:30,529 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:47542 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:48:30,534 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:48:30,535 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.full_name, users.hashed_password, users.role, users.is_active, users.created_at, users.updated_at 
+purferme_api  | FROM users 
+purferme_api  | WHERE users.id = $1::VARCHAR
+purferme_api  | 2026-03-12 18:48:30,535 INFO sqlalchemy.engine.Engine [cached since 1885s ago] ('d668dc21-dbb4-4eb5-91aa-5d2db75ed236',)
+purferme_api  | 2026-03-12 18:48:30,537 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+purferme_api  | FROM (SELECT batches.id AS id, batches.batch_code AS batch_code, batches.product_id AS product_id, batches.recipe_id AS recipe_id, batches.status AS status, batches.blockchain_hash AS blockchain_hash, batches.locked_at AS locked_at, batches.forensic_report_url AS forensic_report_url, batches.created_at AS created_at, batches.updated_at AS updated_at 
+purferme_api  | FROM batches) AS anon_1
+purferme_api  | 2026-03-12 18:48:30,537 INFO sqlalchemy.engine.Engine [cached since 652.8s ago] ()
+purferme_api  | 2026-03-12 18:48:30,538 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  |  LIMIT $1::INTEGER OFFSET $2::INTEGER
+purferme_api  | 2026-03-12 18:48:30,538 INFO sqlalchemy.engine.Engine [cached since 652.7s ago] (50, 0)
+purferme_api  | 2026-03-12 18:48:30,539 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:47558 - "GET /api/v1/batches HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:48:30,556 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:48:30,556 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE lower(batches.batch_code) = $1::VARCHAR
+purferme_api  | 2026-03-12 18:48:30,556 INFO sqlalchemy.engine.Engine [cached since 227.1s ago] ('batch-2025-07',)
+purferme_api  | 2026-03-12 18:48:30,559 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:48:30,559 INFO sqlalchemy.engine.Engine [cached since 227.1s ago] ('0a0d1641-0edd-499c-a63b-b54218521ae9',)
+purferme_api  | 2026-03-12 18:48:30,560 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+purferme_api  | 2026-03-12 18:48:30,561 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.batch_code, batches.product_id, batches.recipe_id, batches.status, batches.blockchain_hash, batches.locked_at, batches.forensic_report_url, batches.created_at, batches.updated_at 
+purferme_api  | FROM batches 
+purferme_api  | WHERE lower(batches.batch_code) = $1::VARCHAR
+purferme_api  | 2026-03-12 18:48:30,561 INFO sqlalchemy.engine.Engine [cached since 227.1s ago] ('batch-2026-001',)
+purferme_api  | 2026-03-12 18:48:30,575 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:47562 - "GET /api/v1/qr/BATCH-2025-07 HTTP/1.1" 200 OK
+purferme_api  | 2026-03-12 18:48:30,579 INFO sqlalchemy.engine.Engine SELECT batch_ingredients.batch_id AS batch_ingredients_batch_id, batch_ingredients.id AS batch_ingredients_id, batch_ingredients.ingredient_id AS batch_ingredients_ingredient_id, batch_ingredients.actual_percentage AS batch_ingredients_actual_percentage, batch_ingredients.source_type AS batch_ingredients_source_type, batch_ingredients.crop_cycle_id AS batch_ingredients_crop_cycle_id, batch_ingredients.vendor_id AS batch_ingredients_vendor_id, batch_ingredients.snapshot_vendor_name AS batch_ingredients_snapshot_vendor_name, batch_ingredients.snapshot_vendor_location AS batch_ingredients_snapshot_vendor_location, batch_ingredients.coa_status AS batch_ingredients_coa_status, batch_ingredients.coa_link AS batch_ingredients_coa_link, batch_ingredients.created_at AS batch_ingredients_created_at, batch_ingredients.updated_at AS batch_ingredients_updated_at 
+purferme_api  | FROM batch_ingredients 
+purferme_api  | WHERE batch_ingredients.batch_id IN ($1::VARCHAR)
+purferme_api  | 2026-03-12 18:48:30,579 INFO sqlalchemy.engine.Engine [cached since 227.1s ago] ('63a9f127-0ae1-444c-bc2b-c878f36de53b',)
+purferme_api  | 2026-03-12 18:48:30,594 INFO sqlalchemy.engine.Engine COMMIT
+purferme_api  | INFO:     172.18.0.1:47572 - "GET /api/v1/qr/BATCH-2026-001 HTTP/1.1" 200 OK
+purferme_api  | INFO:     172.18.0.1:47558 - "GET /api/v1/public/batch/BATCH-2026-001 HTTP/1.1" 404 Not Found
+purferme_api  | INFO:     172.18.0.1:49022 - "GET /api/v1/public/batch/BATCH-2025-07 HTTP/1.1" 404 Not Found
+purferme_api  | INFO:     172.18.0.1:49022 - "GET /api/v1/public/batch/BATCH-2025-07 HTTP/1.1" 404 Not Found

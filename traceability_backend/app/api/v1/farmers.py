@@ -34,14 +34,27 @@ async def list_farmers_endpoint(
     return {"total": total, "items": [FarmerRead.model_validate(f) for f in farmers]}
 
 
+from sqlalchemy import func, select
+from app.models.farmer import Farmer
+
 @router.post("", response_model=FarmerRead, status_code=status.HTTP_201_CREATED)
 async def create_farmer_endpoint(
     data: FarmerCreate,
     db: AsyncSession = Depends(get_async_session),
     current_user=AdminOrAbove,
 ):
+    # Case-insensitive duplicate check
+    existing = await db.execute(
+        select(Farmer).where(func.lower(Farmer.name) == data.name.lower())
+    )
+    if existing.scalars().first():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Farmer with name '{data.name}' already exists."
+        )
+
     farmer = await create_farmer(db, data)
-    await log_action(db, user_id=current_user.id, user_email=current_user.email,
+    await log_action(db, user_id=current_user.id, user_name=current_user.full_name, user_email=current_user.email,
                      action="CREATE_FARMER", table_name="farmers", record_id=farmer.id,
                      details=data.model_dump())
     return farmer
@@ -69,8 +82,23 @@ async def update_farmer_endpoint(
     farmer = await get_farmer(db, farmer_id)
     if not farmer:
         raise HTTPException(status_code=404, detail="Farmer not found.")
+    
+    if data.name:
+        # Case-insensitive duplicate check for name (excluding self)
+        existing = await db.execute(
+            select(Farmer).where(
+                func.lower(Farmer.name) == data.name.lower(),
+                Farmer.id != farmer_id
+            )
+        )
+        if existing.scalars().first():
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Farmer with name '{data.name}' already exists."
+            )
+
     updated = await update_farmer(db, farmer, data)
-    await log_action(db, user_id=current_user.id, user_email=current_user.email,
+    await log_action(db, user_id=current_user.id, user_name=current_user.full_name, user_email=current_user.email,
                      action="UPDATE_FARMER", table_name="farmers", record_id=farmer_id,
                      details=data.model_dump(exclude_unset=True))
     return updated
@@ -95,7 +123,7 @@ async def create_farm_endpoint(
 ):
     data.farmer_id = farmer_id
     farm = await create_farm(db, data)
-    await log_action(db, user_id=current_user.id, user_email=current_user.email,
+    await log_action(db, user_id=current_user.id, user_name=current_user.full_name, user_email=current_user.email,
                      action="CREATE_FARM", table_name="farms", record_id=farm.id,
                      details=data.model_dump())
     return farm

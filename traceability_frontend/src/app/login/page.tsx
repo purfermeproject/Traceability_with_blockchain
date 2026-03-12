@@ -3,14 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Sprout, Mail, Lock, ArrowRight, Loader2 } from 'lucide-react';
+import { Sprout, Mail, Lock, ArrowRight, Loader2, Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
-import axios from 'axios';
+import api from '@/lib/api';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
@@ -18,7 +19,7 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`, {
+            const response = await api.post('http://127.0.0.1:8000/api/v1/auth/login', {
                 email,
                 password,
             });
@@ -27,11 +28,8 @@ export default function LoginPage() {
             localStorage.setItem('access_token', access_token);
             localStorage.setItem('refresh_token', refresh_token);
 
-            // Decoding token manually or fetching user info
-            // For simplicity, we'll store basic info from a separate fetch or mock
-            const userResp = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`, {
-                headers: { Authorization: `Bearer ${access_token}` }
-            });
+            // Fetch user info using the fixed api instance
+            const userResp = await api.get('users/me');
             localStorage.setItem('user_info', JSON.stringify(userResp.data));
 
             toast.success('Welcome back to PurFerme!');
@@ -44,7 +42,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#020617] relative overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-[#020617] relative overflow-hidden text-slate-100">
             {/* Background Gradients */}
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px]" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-900/20 rounded-full blur-[120px]" />
@@ -87,13 +85,20 @@ export default function LoginPage() {
                             <div className="relative group">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-primary transition-colors" />
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-slate-950/50 border border-slate-800 focus:border-primary rounded-2xl py-3.5 pl-12 pr-4 text-white outline-none transition-all duration-300 placeholder:text-slate-600"
+                                    className="w-full bg-slate-950/50 border border-slate-800 focus:border-primary rounded-2xl py-3.5 pl-12 pr-12 text-white outline-none transition-all duration-300 placeholder:text-slate-600"
                                     placeholder="••••••••"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-primary transition-colors"
+                                >
+                                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                </button>
                             </div>
                         </div>
 

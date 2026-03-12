@@ -67,6 +67,7 @@ class Batch(Base, TimestampMixin):
     # Phase 2: SHA-256 hash stored here on lock
     blockchain_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
     locked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    forensic_report_url: Mapped[str | None] = mapped_column(String(2048), nullable=True)
 
     product: Mapped["Product"] = relationship("Product", back_populates="batches")
     recipe: Mapped["Recipe"] = relationship("Recipe", back_populates="batches")

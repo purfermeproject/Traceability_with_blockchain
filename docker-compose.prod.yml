@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: purferme_db_prod
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-purferme_db}
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB:-purferme_db}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - purferme_prod_network
+
+  api:
+    build:
+      context: ./traceability_backend
+      dockerfile: Dockerfile
+      target: production
+    container_name: purferme_api_prod
+    restart: always
+    env_file:
+      - ./traceability_backend/.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-purferme_db}
+      SYNC_DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-purferme_db}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - purferme_prod_network
+
+  frontend:
+    build:
+      context: ./traceability_frontend
+      dockerfile: Dockerfile
+      target: production
+    container_name: purferme_frontend_prod
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    depends_on:
+      - api
+    networks:
+      - purferme_prod_network
+
+networks:
+  purferme_prod_network:
+    driver: bridge
+
+volumes:
+  postgres_data_prod:

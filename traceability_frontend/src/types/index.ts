@@ -27,23 +27,29 @@ export interface DashboardMetrics {
 export interface Farmer {
   id: string;
   name: string;
-  contact_number: string;
+  village: string;
+  district: string;
+  profile_photo_url?: string | null;
+  about?: string | null;
   is_active: boolean;
 }
 
 export interface Farm {
   id: string;
   farmer_id: string;
-  location: string;
-  google_drive_url: string;
+  name: string;
+  location_pin?: string | null;
+  acreage?: string | null;
+  npk_ratio?: string | null;
+  farming_technology?: string | null;
 }
 
 export interface Vendor {
   id: string;
   company_name: string;
-  contact_person?: string;
-  email?: string;
-  location?: string;
+  city: string;
+  state: string;
+  gst_no?: string | null;
   is_active: boolean;
 }
 
@@ -61,13 +67,59 @@ export interface Batch {
   status: 'DRAFT' | 'LOCKED';
   blockchain_hash?: string;
   locked_at?: string;
+  forensic_report_url?: string;
   created_at: string;
 }
 
 export interface AuditLog {
-  id: number;
+  id: string;
   user_id: string;
+  user_name?: string | null;
+  user_email: string;
   action: string;
-  details?: Record<string, any>;
+  table_name: string;
+  record_id?: string | null;
+  details?: any;
   timestamp: string;
+}
+
+export type CropStage =
+  'Ploughing' |
+  'Sowing' |
+  'Irrigation' |
+  'Harvest' |
+  'Processing' |
+  'Storage' |
+  'Damage' |
+  'Other';
+
+export interface CropCycle {
+  id: string;
+  farmer_id: string;
+  farm_id?: string | null;
+  crop_name: string;
+  lot_reference_code: string;
+  is_active: boolean;
+  // Computed on frontend
+  status?: string;
+  start_date?: string;
+  events?: CropEvent[];
+}
+
+export interface CropEvent {
+  id: string;
+  crop_cycle_id: string;
+  stage_name: CropStage;
+  event_date: string;
+  description?: string | null;
+  photo_urls?: string | null;
+  photo_url_list: string[];
+}
+export interface Ingredient {
+  id: string;
+  name: string;
+  type: string;
+  requires_tracking: boolean;
+  procurement_details?: string | null;
+  key_benefits_json?: string | null;
 }

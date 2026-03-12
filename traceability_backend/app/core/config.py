@@ -34,6 +34,12 @@ class Settings(BaseSettings):
     FIRST_SUPERADMIN_EMAIL: str = "admin@purferme.com"
     FIRST_SUPERADMIN_PASSWORD: str = "ChangeMe@123"
 
+    SECOND_SUPERADMIN_EMAIL: str | None = None
+    SECOND_SUPERADMIN_PASSWORD: str | None = None
+
+    THIRD_SUPERADMIN_EMAIL: str | None = None
+    THIRD_SUPERADMIN_PASSWORD: str | None = None
+
     class Config:
         env_file = ".env"
         case_sensitive = True

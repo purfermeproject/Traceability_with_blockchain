@@ -39,27 +39,37 @@ async def lifespan(app: FastAPI):
 
 async def _seed_superadmin() -> None:
     """
-    Idempotent seed: creates the initial SUPER_ADMIN user if none exists.
-    Credentials come from .env (FIRST_SUPERADMIN_EMAIL / _PASSWORD).
+    Idempotent seed: creates configured SUPER_ADMIN users if they don't exist.
+    Credentials come from .env.
     """
     from app.db.session import AsyncSessionLocal
     from app.crud.users import get_user_by_email, create_user
     from app.schemas.user import UserCreate
     from app.models.user import UserRole
 
+    admins_to_seed = []
+    if settings.FIRST_SUPERADMIN_EMAIL:
+        admins_to_seed.append((settings.FIRST_SUPERADMIN_EMAIL, settings.FIRST_SUPERADMIN_PASSWORD, "Abhinav (Super Admin)"))
+    if settings.SECOND_SUPERADMIN_EMAIL:
+        admins_to_seed.append((settings.SECOND_SUPERADMIN_EMAIL, settings.SECOND_SUPERADMIN_PASSWORD, "Abhinav (Super Admin)"))
+    if settings.THIRD_SUPERADMIN_EMAIL:
+        admins_to_seed.append((settings.THIRD_SUPERADMIN_EMAIL, settings.THIRD_SUPERADMIN_PASSWORD, "Super Admin 3"))
+
     async with AsyncSessionLocal() as db:
-        existing = await get_user_by_email(db, settings.FIRST_SUPERADMIN_EMAIL)
-        if not existing:
-            await create_user(
-                db,
-                UserCreate(
-                    email=settings.FIRST_SUPERADMIN_EMAIL,
-                    full_name="Super Administrator",
-                    password=settings.FIRST_SUPERADMIN_PASSWORD,
-                    role=UserRole.SUPER_ADMIN,
-                ),
-            )
-            await db.commit()
+        for email, password, name in admins_to_seed:
+            existing = await get_user_by_email(db, email)
+            if not existing:
+                await create_user(
+                    db,
+                    UserCreate(
+                        email=email,
+                        full_name=name,
+                        password=password,
+                        role=UserRole.SUPER_ADMIN,
+                    ),
+                )
+                print(f"✅ Seeded Super Admin: {email}")
+        await db.commit()
 
 
 # ── App Factory ───────────────────────────────────────────────────────────────
@@ -102,7 +112,7 @@ def create_app() -> FastAPI:
     app.include_router(dashboard.router, prefix=prefix)
     app.include_router(recipes.router, prefix=prefix)
     app.include_router(audit_logs.router, prefix=prefix)
-    app.include_router(public.router)  # No version prefix — public consumer URL
+    app.include_router(public.router, prefix=prefix)
 
     @app.get("/health", tags=["Health"])
     async def health():

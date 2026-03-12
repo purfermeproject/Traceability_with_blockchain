@@ -44,7 +44,7 @@ export default function DashboardLayout({
                     </div>
                 </header>
                 <div className="flex-1 overflow-y-auto p-8 bg-slate-50 dark:bg-[#020617]">
-                    <div className="max-w-7xl mx-auto animate-fade-in">
+                    <div className="max-w-7xl mx-auto">
                         {children}
                     </div>
                 </div>

@@ -9,24 +9,20 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.dependencies import require_roles
-from app.crud.batches import get_batch
+from app.crud.batches import get_batch_by_code
 from app.db.session import get_async_session
 from app.models.batch import BatchStatus
 from app.core.config import settings
 
 router = APIRouter(prefix="/qr", tags=["QR Codes"])
 
-AdminOrAbove = Depends(require_roles("SUPER_ADMIN", "ADMIN"))
 
-
-@router.get("/{batch_id}", summary="Generate QR code PNG for a LOCKED batch")
+@router.get("/{batch_code}", summary="Generate QR code PNG for a LOCKED batch")
 async def generate_qr(
-    batch_id: str,
+    batch_code: str,
     db: AsyncSession = Depends(get_async_session),
-    _=AdminOrAbove,
 ):
-    batch = await get_batch(db, batch_id)
+    batch = await get_batch_by_code(db, batch_code)
     if not batch:
         raise HTTPException(status_code=404, detail="Batch not found.")
     if batch.status != BatchStatus.LOCKED:

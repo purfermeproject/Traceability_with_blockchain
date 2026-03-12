@@ -1,0 +1,103 @@
+{
+    "batch_code":  "BATCH-2025-07",
+    "product_id":  "90ce5fb6-34fd-4f3d-8438-8660a5f65427",
+    "blockchain_hash":  "0x7d9f2ec4a1b8e9d2f0x7d9f2ec4a1b8e9d2f0",
+    "locked_at":  "2025-01-22T10:00:00+00:00",
+    "ingredients":  [
+                        {
+                            "ingredient_id":  "ING-DATES-01",
+                            "name":  "Dates",
+                            "actual_percentage":  19.0,
+                            "source_type":  "VENDOR",
+                            "source_label":  "Sourced from Dates Supplier â?? Hyderabad, Telangana",
+                            "coa_available":  true,
+                            "coa_link":  "https://drive.google.com/file/d/coa-dates/view",
+                            "procurement_details":  null,
+                            "key_benefits":  [
+
+                                             ]
+                        },
+                        {
+                            "ingredient_id":  "ING-WHEY-02",
+                            "name":  "Whey Protein",
+                            "actual_percentage":  14.0,
+                            "source_type":  "VENDOR",
+                            "source_label":  "Sourced from Whey Global â?? Hrinova, Slovakia",
+                            "coa_available":  true,
+                            "coa_link":  "https://drive.google.com/file/d/coa-whey/view",
+                            "procurement_details":  null,
+                            "key_benefits":  [
+
+                                             ]
+                        },
+                        {
+                            "ingredient_id":  "ING-HONEY-03",
+                            "name":  "Honey",
+                            "actual_percentage":  17.0,
+                            "source_type":  "VENDOR",
+                            "source_label":  "Sourced from Honey Farms â?? Barabanki, Uttar Pradesh",
+                            "coa_available":  true,
+                            "coa_link":  "https://drive.google.com/file/d/coa-honey/view",
+                            "procurement_details":  null,
+                            "key_benefits":  [
+
+                                             ]
+                        },
+                        {
+                            "ingredient_id":  "ING-MILLET-04",
+                            "name":  "Foxtail millet Flakes",
+                            "actual_percentage":  15.9,
+                            "source_type":  "FARM",
+                            "source_label":  "Sourced directly from Farmer",
+                            "coa_available":  true,
+                            "coa_link":  "https://drive.google.com/file/d/coa-millet/view",
+                            "procurement_details":  "Sourced directly from the Seed center Nutrihub, IIMR. SiA 3088 is a distinguished short-duration variety, specifically bred for superior drought tolerance and exceptional seedling vigor.",
+                            "key_benefits":  [
+                                                 {
+                                                     "title":  "Short Duration",
+                                                     "desc":  "Rapid maturity cycle ideal for efficient crop rotation."
+                                                 },
+                                                 {
+                                                     "title":  "Drought Tolerant",
+                                                     "desc":  "Thrives in regions with limited rainfall."
+                                                 }
+                                             ]
+                        }
+                    ],
+    "timeline":  [
+                     {
+                         "stage_name":  "Ploughing",
+                         "event_date":  "2024-11-01",
+                         "description":  "Deep ploughing to improve soil aeration and nutrient distribution.",
+                         "photo_urls":  [
+                                            "https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c18?w=800"
+                                        ],
+                         "is_damage_event":  false
+                     },
+                     {
+                         "stage_name":  "Sowing",
+                         "event_date":  "2024-11-15",
+                         "description":  "Sowing of high-quality Foxtail Millet seeds (SiA 3088).",
+                         "photo_urls":  [
+                                            "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=800"
+                                        ],
+                         "is_damage_event":  false
+                     }
+                 ],
+    "farmer":  {
+                   "name":  "S. Ramana",
+                   "location":  "Andhra Pradesh (AP)",
+                   "joined_date":  "2026-03-12",
+                   "profile_photo_url":  "https://images.unsplash.com/photo-1599839619722-39751411ea63?w=400",
+                   "about":  "S. Ramana is a dedicated farmer who has been part of our sustainable agriculture program since 2025-01-22. Based in Srikakulam, they employ eco-friendly farming practices to ensure the highest quality produce while maintaining environmental sustainability."
+               },
+    "farm":  {
+                 "id":  "AP532005SR",
+                 "name":  "Ramana\u0027s Eco Farm",
+                 "acreage":  "1 Acre",
+                 "npk_ratio":  "8:6:3",
+                 "farming_technology":  "Broadcasting",
+                 "location_pin":  "18.2949, 83.8938"
+             },
+    "forensic_report_url":  "https://drive.google.com/file/d/forensic-placeholder/view"
+}

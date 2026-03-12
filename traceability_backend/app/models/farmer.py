@@ -1,4 +1,4 @@
-from sqlalchemy import String, Boolean, ForeignKey
+from sqlalchemy import String, Boolean, ForeignKey, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -14,6 +14,7 @@ class Farmer(Base, TimestampMixin):
     village: Mapped[str] = mapped_column(String(255), nullable=False)
     district: Mapped[str] = mapped_column(String(255), nullable=False)
     profile_photo_url: Mapped[str | None] = mapped_column(String(2048), nullable=True)
+    about: Mapped[str | None] = mapped_column(Text, nullable=True)
     # Soft-delete — never hard delete a farmer (breaks FK history)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
@@ -33,6 +34,11 @@ class Farm(Base, TimestampMixin):
     )
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     location_pin: Mapped[str | None] = mapped_column(String(512), nullable=True)
+    
+    # Traceability Metrics
+    acreage: Mapped[str | None] = mapped_column(String(100), nullable=True, default="1 Acre")
+    npk_ratio: Mapped[str | None] = mapped_column(String(50), nullable=True, default="8:6:3")
+    farming_technology: Mapped[str | None] = mapped_column(String(255), nullable=True, default="Broadcasting")
 
     # Relationships
     farmer: Mapped["Farmer"] = relationship("Farmer", back_populates="farms")

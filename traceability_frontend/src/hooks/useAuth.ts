@@ -8,29 +8,31 @@ export function useAuth() {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
-    useEffect(() => {
-        async function fetchUser() {
-            const token = localStorage.getItem('access_token');
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            try {
-                // Assuming we have a me endpoint or we can decode token
-                // For now let's just use the users list or a specific me endpoint if we had one
-                // Let's assume we store user info initially in localStorage for speed
-                const savedUser = localStorage.getItem('user_info');
-                if (savedUser) {
-                    setUser(JSON.parse(savedUser));
-                }
-            } catch (err) {
-                console.error('Failed to fetch user', err);
-            } finally {
-                setLoading(false);
-            }
+    async function fetchUser() {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            setLoading(false);
+            return;
         }
 
+        try {
+            const res = await api.get('users/me');
+            const userData = res.data;
+            setUser(userData);
+            localStorage.setItem('user_info', JSON.stringify(userData));
+        } catch (err) {
+            console.error('Failed to fetch user', err);
+            // If it fails, maybe token is invalid, but Axios interceptor should handle 401
+            const savedUser = localStorage.getItem('user_info');
+            if (savedUser) {
+                setUser(JSON.parse(savedUser));
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
         fetchUser();
     }, []);
 
@@ -42,5 +44,5 @@ export function useAuth() {
         router.push('/login');
     };
 
-    return { user, loading, logout, setUser };
+    return { user, loading, logout, setUser, fetchUser };
 }

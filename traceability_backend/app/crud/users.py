@@ -38,6 +38,18 @@ async def update_user(db: AsyncSession, user: User, data: UserUpdate) -> User:
     return user
 
 
+async def deactivate_user(db: AsyncSession, user: User) -> User:
+    user.is_active = False
+    await db.flush()
+    return user
+
+
+async def update_user_password(db: AsyncSession, user: User, password: str) -> User:
+    user.hashed_password = hash_password(password)
+    await db.flush()
+    return user
+
+
 async def list_users(db: AsyncSession, skip: int = 0, limit: int = 50) -> list[User]:
     result = await db.execute(select(User).offset(skip).limit(limit))
     return list(result.scalars().all())

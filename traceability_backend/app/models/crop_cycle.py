@@ -13,6 +13,7 @@ class CropStage(str, enum.Enum):
     SOWING = "Sowing"
     IRRIGATION = "Irrigation"
     HARVEST = "Harvest"
+    PROCESSING = "Processing"
     STORAGE = "Storage"
     DAMAGE = "Damage"
     OTHER = "Other"

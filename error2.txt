@@ -1,0 +1,50 @@
+﻿purferme_api  |     context.session.execute(
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2351, in execute
+purferme_api  |     return self._execute_internal(
+purferme_api  |            ^^^^^^^^^^^^^^^^^^^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2236, in _execute_internal
+purferme_api  |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+purferme_api  |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
+purferme_api  |     result = conn.execute(
+purferme_api  |              ^^^^^^^^^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+purferme_api  |     return meth(
+purferme_api  |            ^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+purferme_api  |     return connection._execute_clauseelement(
+purferme_api  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+purferme_api  |     ret = self._execute_context(
+purferme_api  |           ^^^^^^^^^^^^^^^^^^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+purferme_api  |     return self._exec_single_context(
+purferme_api  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+purferme_api  |     self._handle_dbapi_exception(
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2353, in _handle_dbapi_exception
+purferme_api  |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+purferme_api  |     self.dialect.do_execute(
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 924, in do_execute
+purferme_api  |     cursor.execute(statement, parameters)
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 572, in execute
+purferme_api  |     self._adapt_connection.await_(
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 131, in await_only
+purferme_api  |     return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+purferme_api  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+purferme_api  |     value = await result
+purferme_api  |             ^^^^^^^^^^^^
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 550, in _prepare_and_execute
+purferme_api  |     self._handle_exception(error)
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 501, in _handle_exception
+purferme_api  |     self._adapt_connection._handle_exception(error)
+purferme_api  |   File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 789, in _handle_exception
+purferme_api  |     raise translated_error from error
+purferme_api  | sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column recipe_ingredients.coa_status does not exist
+purferme_api  | [SQL: SELECT recipe_ingredients.recipe_id AS recipe_ingredients_recipe_id, recipe_ingredients.id AS recipe_ingredients_id, recipe_ingredients.ingredient_id AS recipe_ingredients_ingredient_id, recipe_ingredients.expected_percentage AS recipe_ingredients_expected_percentage, recipe_ingredients.coa_status AS recipe_ingredients_coa_status, recipe_ingredients.coa_link AS recipe_ingredients_coa_link 
+purferme_api  | FROM recipe_ingredients 
+purferme_api  | WHERE recipe_ingredients.recipe_id IN ($1::VARCHAR)]
+purferme_api  | [parameters: ('40904b7a-0997-4b05-a930-c40d145190e7',)]
+purferme_api  | (Background on this error at: https://sqlalche.me/e/20/f405)

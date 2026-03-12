@@ -13,10 +13,10 @@ def validate_drive_url(v: str | None) -> str | None:
 
 class FarmerCreate(PurFermeBase):
     name: str
-    phone: str
     village: str
     district: str
     profile_photo_url: str | None = None
+    about: str | None = None
 
     @field_validator("profile_photo_url")
     @classmethod
@@ -26,10 +26,10 @@ class FarmerCreate(PurFermeBase):
 
 class FarmerUpdate(PurFermeBase):
     name: str | None = None
-    phone: str | None = None
     village: str | None = None
     district: str | None = None
     profile_photo_url: str | None = None
+    about: str | None = None
     is_active: bool | None = None
 
     @field_validator("profile_photo_url")
@@ -41,17 +41,20 @@ class FarmerUpdate(PurFermeBase):
 class FarmerRead(PurFermeBase):
     id: str
     name: str
-    phone: str
     village: str
     district: str
     profile_photo_url: str | None
+    about: str | None
     is_active: bool
 
 
 class FarmCreate(PurFermeBase):
-    farmer_id: str
+    farmer_id: str | None = None
     name: str
     location_pin: str | None = None
+    acreage: str | None = None
+    npk_ratio: str | None = None
+    farming_technology: str | None = None
 
 
 class FarmRead(PurFermeBase):
@@ -59,3 +62,6 @@ class FarmRead(PurFermeBase):
     farmer_id: str
     name: str
     location_pin: str | None
+    acreage: str | None
+    npk_ratio: str | None
+    farming_technology: str | None

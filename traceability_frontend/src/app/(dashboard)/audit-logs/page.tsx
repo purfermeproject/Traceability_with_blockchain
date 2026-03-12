@@ -19,7 +19,7 @@ export default function AuditLogsPage() {
 
     async function fetchLogs() {
         try {
-            const res = await api.get('/audit-logs');
+            const res = await api.get('audit-logs');
             setLogs(res.data.items);
         } catch (err) {
             toast.error('Failed to load audit logs');
@@ -30,7 +30,9 @@ export default function AuditLogsPage() {
 
     const filteredLogs = logs.filter(log =>
         log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        log.user_id.toLowerCase().includes(searchTerm.toLowerCase())
+        log.user_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        log.user_email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (log.user_name && log.user_name.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     return (
@@ -40,7 +42,7 @@ export default function AuditLogsPage() {
                     <Terminal className="w-3 h-3" />
                     Restricted Access
                 </div>
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 font-outfit">Audit Ledger</h1>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 font-outfit">Audit Ledger (Refreshed)</h1>
                 <p className="text-slate-500">Immutable record of all administrative actions performed on the platform.</p>
             </header>
 
@@ -79,7 +81,7 @@ export default function AuditLogsPage() {
                                 <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500">
                                     <span className="flex items-center gap-1.5 whitespace-nowrap">
                                         <User className="w-3.5 h-3.5" />
-                                        Admin: {log.user_id.substring(0, 8)}...
+                                        Admin: {log.user_name || log.user_email}
                                     </span>
                                     <span className="flex items-center gap-1.5 whitespace-nowrap">
                                         <Clock className="w-3.5 h-3.5" />

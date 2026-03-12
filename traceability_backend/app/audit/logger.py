@@ -18,6 +18,7 @@ async def log_action(
     db: AsyncSession,
     *,
     user_id: str | None,
+    user_name: str | None = None,
     user_email: str | None,
     action: str,
     table_name: str,
@@ -36,6 +37,7 @@ async def log_action(
     entry = AuditLog(
         id=new_uuid(),
         user_id=user_id,
+        user_name=user_name,
         user_email=user_email,
         action=action,
         table_name=table_name,

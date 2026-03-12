@@ -36,6 +36,7 @@ async def get_audit_logs(
             {
                 "id": log.id,
                 "user_id": log.user_id,
+                "user_name": log.user_name,
                 "user_email": log.user_email,
                 "action": log.action,
                 "table_name": log.table_name,

@@ -1,0 +1,157 @@
+Seeding data extracted from images...
+2026-03-11 16:39:15,044 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2026-03-11 16:39:15,045 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-03-11 16:39:15,051 INFO sqlalchemy.engine.Engine select current_schema()
+2026-03-11 16:39:15,052 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-03-11 16:39:15,058 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2026-03-11 16:39:15,059 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-03-11 16:39:15,077 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-03-11 16:39:15,083 INFO sqlalchemy.engine.Engine INSERT INTO farmers (id, name, phone, village, district, profile_photo_url, is_active) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::BOOLEAN) RETURNING farmers.created_at, farmers.updated_at
+2026-03-11 16:39:15,084 INFO sqlalchemy.engine.Engine [generated in 0.00170s] ('00991d86-4f6f-4370-84ef-145c0c67f37d', 'S. Ramana', '9999999999', 'Srikakulam', 'Andhra Pradesh (AP)', 'https://drive.google.com/file/d/1_placeholder_farmer/view', True)
+Added Farmer: S. Ramana
+2026-03-11 16:39:15,099 INFO sqlalchemy.engine.Engine INSERT INTO farms (id, farmer_id, name, location_pin) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR) RETURNING farms.created_at, farms.updated_at
+2026-03-11 16:39:15,100 INFO sqlalchemy.engine.Engine [generated in 0.00113s] ('11698e8e-5b58-4204-bf9f-b8ac8c3bbb57', '00991d86-4f6f-4370-84ef-145c0c67f37d', "S. Ramana's Farm", 'https://goo.gl/maps/placeholder')
+Added Farm: S. Ramana's Farm (ID: AP532005SR - Reference)
+2026-03-11 16:39:15,115 INFO sqlalchemy.engine.Engine INSERT INTO ingredients (id, name, type, requires_tracking) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN), ($5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::BOOLEAN) RETURNING ingredients.created_at, ingredients.updated_at, ingredients.id
+2026-03-11 16:39:15,116 INFO sqlalchemy.engine.Engine [generated in 0.00028s (insertmanyvalues) 1/1 (ordered)] ('602b5bf4-f665-4069-ba87-a1038704cfe4', 'Foxtail Millet - SiA 4056', 'Millet', True, '164b6cdd-80f4-467e-8230-bdcbad3048fa', 'Foxtail Millet - SiA 3088', 'Millet', True)
+Added Ingredients: Foxtail Millet variants
+2026-03-11 16:39:15,128 INFO sqlalchemy.engine.Engine INSERT INTO crop_cycles (id, farmer_id, farm_id, crop_name, lot_reference_code, is_active) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::BOOLEAN) RETURNING crop_cycles.created_at, crop_cycles.updated_at
+2026-03-11 16:39:15,130 INFO sqlalchemy.engine.Engine [generated in 0.00142s] ('6f07942a-aaae-44f2-97e8-af9f2d1738f7', '00991d86-4f6f-4370-84ef-145c0c67f37d', '11698e8e-5b58-4204-bf9f-b8ac8c3bbb57', 'Foxtail Millet', 'LOT-SR-2025-001', True)
+Added Crop Cycle: LOT-SR-2025-001
+Added 4 Crop Events
+2026-03-11 16:39:15,149 INFO sqlalchemy.engine.Engine INSERT INTO crop_events (id, crop_cycle_id, stage_name, event_date, description, photo_urls) VALUES ($1::VARCHAR, $2::VARCHAR, $3::cropstage, $4::DATE, $5::VARCHAR, $6::VARCHAR), ($7::VARCHAR, $8::VARCHAR, $9::cropstage, $10::DATE, $11::VARCHAR, $12: ... 152 characters truncated ... $23::VARCHAR, $24::VARCHAR) RETURNING crop_events.created_at, crop_events.updated_at, crop_events.id
+2026-03-11 16:39:15,150 INFO sqlalchemy.engine.Engine [generated in 0.00030s (insertmanyvalues) 1/1 (ordered)] ('27d0c9e8-d6a1-4ffa-9c1d-47131662c50d', '6f07942a-aaae-44f2-97e8-af9f2d1738f7', 'IRRIGATION', datetime.date(2025, 3, 1), 'The controlled application of water to crops at critical growth stages to maintain soil moisture and support vigorous plant development.', 'https://drive.google.com/file/d/img1/view,https://drive.google.com/file/d/img2/view', 'c59b6ffc-c8f7-4056-bec4-277aee73c2dd', '6f07942a-aaae-44f2-97e8-af9f2d1738f7', 'HARVEST', datetime.date(2025, 5, 16), 'Careful harvesting at optimal maturity for maximum nutrition.', 'https://drive.google.com/file/d/img3/view,https://drive.google.com/file/d/img4/view,https://drive.google.com/file/d/img5/view,https://drive.google.com/file/d/img6/view', 'd926abfd-372c-4fa4-b221-d707b5a2d844', '6f07942a-aaae-44f2-97e8-af9f2d1738f7', 'PROCESSING', datetime.date(2025, 5, 17), 'The post-harvest treatment of the crop, including cleaning, drying, and initial quality testing, to prepare it for storage or further refinement.', 'https://drive.google.com/file/d/img7/view,https://drive.google.com/file/d/img8/view,https://drive.google.com/file/d/img9/view,https://drive.google.com/file/d/img10/view', '2101f88e-6273-40eb-a272-6c35cb4a1887', '6f07942a-aaae-44f2-97e8-af9f2d1738f7', 'STORAGE', datetime.date(2025, 5, 18), 'Storing the processed crop in a controlled environment to maintain quality.', 'https://drive.google.com/file/d/img11/view')
+2026-03-11 16:39:15,238 INFO sqlalchemy.engine.Engine INSERT INTO products (id, name, sku, category) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR) RETURNING products.created_at, products.updated_at
+2026-03-11 16:39:15,239 INFO sqlalchemy.engine.Engine [generated in 0.00142s] ('61ea8673-fb0e-4f58-a7c8-71216a680792', 'Foxtail Millet Pack', 'FM-SIA-1KG', 'Grains')
+2026-03-11 16:39:15,249 INFO sqlalchemy.engine.Engine INSERT INTO recipes (id, product_id, version, is_locked) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN) RETURNING recipes.created_at, recipes.updated_at
+2026-03-11 16:39:15,251 INFO sqlalchemy.engine.Engine [generated in 0.00176s] ('27869e09-1754-42a1-b9e0-74aeb879081c', '61ea8673-fb0e-4f58-a7c8-71216a680792', 'v1.0', True)
+2026-03-11 16:39:15,263 INFO sqlalchemy.engine.Engine INSERT INTO batches (id, batch_code, product_id, recipe_id, status, blockchain_hash, locked_at, forensic_report_url) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::batchstatus, $6::VARCHAR, $7::TIMESTAMP WITH TIME ZONE, $8::VARCHAR) RETURNING batches.created_at, batches.updated_at
+2026-03-11 16:39:15,264 INFO sqlalchemy.engine.Engine [generated in 0.00160s] ('80511c01-b7e8-46d7-bba4-6b9c6c927a56', 'BATCH-FM-2025-01', '61ea8673-fb0e-4f58-a7c8-71216a680792', '27869e09-1754-42a1-b9e0-74aeb879081c', 'LOCKED', '0x28f2d57a9e5b6140... (Simulated)', datetime.datetime(2026, 3, 11, 16, 39, 15, 259264, tzinfo=datetime.timezone.utc), None)
+2026-03-11 16:39:15,269 INFO sqlalchemy.engine.Engine ROLLBACK
+ERROR during seeding: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column "forensic_report_url" of relation "batches" does not exist
+[SQL: INSERT INTO batches (id, batch_code, product_id, recipe_id, status, blockchain_hash, locked_at, forensic_report_url) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::batchstatus, $6::VARCHAR, $7::TIMESTAMP WITH TIME ZONE, $8::VARCHAR) RETURNING batches.created_at, batches.updated_at]
+[parameters: ('80511c01-b7e8-46d7-bba4-6b9c6c927a56', 'BATCH-FM-2025-01', '61ea8673-fb0e-4f58-a7c8-71216a680792', '27869e09-1754-42a1-b9e0-74aeb879081c', 'LOCKED', '0x28f2d57a9e5b6140... (Simulated)', datetime.datetime(2026, 3, 11, 16, 39, 15, 259264, tzinfo=datetime.timezone.utc), None)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Original error: <class 'asyncpg.exceptions.UndefinedColumnError'>: column "forensic_report_url" of relation "batches" does not exist
+Failed statement: INSERT INTO batches (id, batch_code, product_id, recipe_id, status, blockchain_hash, locked_at, forensic_report_url) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::batchstatus, $6::VARCHAR, $7::TIMESTAMP WITH TIME ZONE, $8::VARCHAR) RETURNING batches.created_at, batches.updated_at
+Failed params: ('80511c01-b7e8-46d7-bba4-6b9c6c927a56', 'BATCH-FM-2025-01', '61ea8673-fb0e-4f58-a7c8-71216a680792', '27869e09-1754-42a1-b9e0-74aeb879081c', 'LOCKED', '0x28f2d57a9e5b6140... (Simulated)', datetime.datetime(2026, 3, 11, 16, 39, 15, 259264, tzinfo=datetime.timezone.utc), None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 514, in _prepare_and_execute
+    prepared_stmt, attributes = await adapt_connection._prepare(
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 765, in _prepare
+    prepared_stmt = await self._connection.prepare(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/asyncpg/connection.py", line 636, in prepare
+    return await self._prepare(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/asyncpg/connection.py", line 654, in _prepare
+    stmt = await self._get_statement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/asyncpg/connection.py", line 433, in _get_statement
+    statement = await self._protocol.prepare(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 166, in prepare
+asyncpg.exceptions.UndefinedColumnError: column "forensic_report_url" of relation "batches" does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 572, in execute
+    self._adapt_connection.await_(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 131, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 550, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 501, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 789, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedColumnError'>: column "forensic_report_url" of relation "batches" does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/seed_data.py", line 188, in <module>
+    asyncio.run(seed())
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/app/seed_data.py", line 181, in seed
+    raise e
+  File "/app/seed_data.py", line 154, in seed
+    await db.flush()
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/ext/asyncio/session.py", line 800, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4341, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4476, in _flush
+    with util.safe_reraise():
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4437, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 572, in execute
+    self._adapt_connection.await_(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 131, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 550, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 501, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 789, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column "forensic_report_url" of relation "batches" does not exist
+[SQL: INSERT INTO batches (id, batch_code, product_id, recipe_id, status, blockchain_hash, locked_at, forensic_report_url) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::batchstatus, $6::VARCHAR, $7::TIMESTAMP WITH TIME ZONE, $8::VARCHAR) RETURNING batches.created_at, batches.updated_at]
+[parameters: ('80511c01-b7e8-46d7-bba4-6b9c6c927a56', 'BATCH-FM-2025-01', '61ea8673-fb0e-4f58-a7c8-71216a680792', '27869e09-1754-42a1-b9e0-74aeb879081c', 'LOCKED', '0x28f2d57a9e5b6140... (Simulated)', datetime.datetime(2026, 3, 11, 16, 39, 15, 259264, tzinfo=datetime.timezone.utc), None)]
+(Background on this error at: https://sqlalche.me/e/20/f405)

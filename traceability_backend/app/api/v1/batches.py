@@ -4,12 +4,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.dependencies import require_roles
 from app.db.session import get_async_session
 from app.models.batch import BatchStatus
-from app.schemas.batch import BatchCreate, BatchRead, BatchSummary, BatchUpdate
+from app.schemas.batch import BatchCreate, BatchRead, BatchSummary, BatchUpdate, BatchComplianceUpdate
 from app.services.batch_service import (
     service_create_batch,
+    service_delete_batch,
+    service_generate_hash,
     service_get_batch_review,
     service_lock_batch,
     service_update_batch,
+    service_update_batch_compliance,
 )
 from app.crud.batches import get_batch, list_batches
 
@@ -63,6 +66,17 @@ async def update_batch_endpoint(
     return await service_update_batch(db, batch_id, data, current_user)
 
 
+@router.patch("/{batch_id}/compliance", response_model=BatchRead)
+async def update_batch_compliance_endpoint(
+    batch_id: str,
+    data: BatchComplianceUpdate,
+    db: AsyncSession = Depends(get_async_session),
+    current_user=AdminOrAbove,
+):
+    """Update forensic report and ingredient COAs for any batch (DRAFT or LOCKED)."""
+    return await service_update_batch_compliance(db, batch_id, data, current_user)
+
+
 @router.get("/{batch_id}/review", response_model=dict)
 async def review_batch_endpoint(
     batch_id: str,
@@ -88,3 +102,23 @@ async def lock_batch_endpoint(
     Generates SHA-256 hash and snapshots vendor data.
     """
     return await service_lock_batch(db, batch_id, current_user)
+
+
+@router.delete("/{batch_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_batch_endpoint(
+    batch_id: str,
+    db: AsyncSession = Depends(get_async_session),
+    current_user=AdminOrAbove,
+):
+    """Delete an entire batch (DRAFT or LOCKED). Irreversible."""
+    await service_delete_batch(db, batch_id, current_user)
+
+
+@router.post("/{batch_id}/generate-hash", response_model=dict)
+async def generate_hash_endpoint(
+    batch_id: str,
+    db: AsyncSession = Depends(get_async_session),
+    _=QAOrAbove,
+):
+    """Re-compute and return the SHA-256 hash for a LOCKED batch."""
+    return await service_generate_hash(db, batch_id)

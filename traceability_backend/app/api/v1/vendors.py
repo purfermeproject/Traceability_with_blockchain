@@ -26,14 +26,27 @@ async def list_vendors_endpoint(
     return {"total": total, "items": [VendorRead.model_validate(v) for v in vendors]}
 
 
+from sqlalchemy import func, select
+from app.models.vendor import Vendor
+
 @router.post("", response_model=VendorRead, status_code=status.HTTP_201_CREATED)
 async def create_vendor_endpoint(
     data: VendorCreate,
     db: AsyncSession = Depends(get_async_session),
     current_user=AdminOrAbove,
 ):
+    # Case-insensitive duplicate check
+    existing = await db.execute(
+        select(Vendor).where(func.lower(Vendor.company_name) == data.company_name.lower())
+    )
+    if existing.scalars().first():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Vendor with company name '{data.company_name}' already exists."
+        )
+
     vendor = await create_vendor(db, data)
-    await log_action(db, user_id=current_user.id, user_email=current_user.email,
+    await log_action(db, user_id=current_user.id, user_name=current_user.full_name, user_email=current_user.email,
                      action="CREATE_VENDOR", table_name="vendors", record_id=vendor.id,
                      details=data.model_dump())
     return vendor
@@ -61,8 +74,23 @@ async def update_vendor_endpoint(
     vendor = await get_vendor(db, vendor_id)
     if not vendor:
         raise HTTPException(status_code=404, detail="Vendor not found.")
+    
+    if data.company_name:
+        # Case-insensitive duplicate check for name (excluding self)
+        existing = await db.execute(
+            select(Vendor).where(
+                func.lower(Vendor.company_name) == data.company_name.lower(),
+                Vendor.id != vendor_id
+            )
+        )
+        if existing.scalars().first():
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Vendor with company name '{data.company_name}' already exists."
+            )
+
     updated = await update_vendor(db, vendor, data)
-    await log_action(db, user_id=current_user.id, user_email=current_user.email,
+    await log_action(db, user_id=current_user.id, user_name=current_user.full_name, user_email=current_user.email,
                      action="UPDATE_VENDOR", table_name="vendors", record_id=vendor_id,
                      details=data.model_dump(exclude_unset=True))
     return updated

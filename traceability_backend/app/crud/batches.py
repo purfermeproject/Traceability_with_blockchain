@@ -37,7 +37,7 @@ async def get_batch_by_code(db: AsyncSession, batch_code: str) -> Batch | None:
     result = await db.execute(
         select(Batch)
         .options(selectinload(Batch.batch_ingredients))
-        .where(Batch.batch_code == batch_code)
+        .where(func.lower(Batch.batch_code) == batch_code.lower())
     )
     return result.scalars().first()
 
@@ -102,6 +102,12 @@ async def replace_batch_ingredients(
     await db.flush()
     for ing_data in ingredients:
         await _add_batch_ingredient(db, batch.id, ing_data)
+
+
+async def delete_batch(db: AsyncSession, batch: Batch) -> None:
+    """Delete a batch and its ingredients (cascade)."""
+    await db.delete(batch)
+    await db.flush()
 
 
 async def snapshot_vendor_data(db: AsyncSession, batch: Batch) -> None:

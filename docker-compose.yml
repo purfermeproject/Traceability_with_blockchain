@@ -1,0 +1,69 @@
+# WARNING: DO NOT use 'docker compose down -v' unless you intend to DELETE ALL PERMANENT DATA.
+# The 'postgres_data' volume below stores your production/development database.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: purferme_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-purferme}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-purferme_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-purferme} -d ${POSTGRES_DB:-purferme_db}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - purferme_network
+
+  api:
+    build:
+      context: ./traceability_backend
+      dockerfile: Dockerfile
+      target: development
+    container_name: purferme_api
+    restart: unless-stopped
+    env_file:
+      - ./traceability_backend/.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-purferme}:${POSTGRES_PASSWORD:-password}@db:5432/${POSTGRES_DB:-purferme_db}
+      SYNC_DATABASE_URL: postgresql://${POSTGRES_USER:-purferme}:${POSTGRES_PASSWORD:-password}@db:5432/${POSTGRES_DB:-purferme_db}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./traceability_backend:/app
+    networks:
+      - purferme_network
+
+  frontend:
+    build:
+      context: ./traceability_frontend
+      dockerfile: Dockerfile
+      target: development
+    container_name: purferme_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./traceability_frontend:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    depends_on:
+      - api
+    networks:
+      - purferme_network
+
+networks:
+  purferme_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
