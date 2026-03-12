@@ -486,27 +486,27 @@ export default function ConsumerJourneyPage() {
                   onError={(e) => (e.currentTarget.src = "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400")}
                 />
                 <div className="flex justify-center gap-4 mt-12 relative z-20">
-                   <button className="bg-white text-[11px] font-black text-black px-8 py-4 rounded-2xl uppercase tracking-widest shadow-2xl">Ledger</button>
-                   <button className="bg-white/5 border border-white/10 backdrop-blur-md text-[11px] font-black text-indigo-300 px-8 py-4 rounded-2xl uppercase tracking-widest">Verify</button>
+                   <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-[11px] font-black text-white px-8 py-4 rounded-2xl uppercase tracking-widest shadow-[0_10px_20px_-5px_rgba(147,51,234,0.4)] transition-all hover:scale-105 active:scale-95">Ledger</button>
+                   <button className="bg-white/5 border border-pink-500/30 backdrop-blur-md text-[11px] font-black text-pink-300 px-8 py-4 rounded-2xl uppercase tracking-widest hover:bg-white/10 transition-all hover:scale-105 active:scale-95">Verify</button>
                 </div>
              </div>
           </div>
         </motion.div>
 
         {/* Footer */}
-        <footer className="pt-24 pb-20 border-t border-white/5">
-          <div className="flex justify-center gap-10 text-slate-700 mb-16">
-            <Globe className="w-6 h-6 hover:text-purple-400 transition-colors" />
-            <Database className="w-6 h-6 hover:text-indigo-400 transition-colors" />
-            <Zap className="w-6 h-6 hover:text-pink-400 transition-colors" />
+        <footer className="pt-24 pb-20 border-t border-white/5 bg-gradient-to-b from-transparent to-purple-900/10">
+          <div className="flex justify-center gap-12 text-slate-400 mb-16">
+            <Globe className="w-6 h-6 hover:text-purple-400 transition-colors cursor-pointer" />
+            <Database className="w-6 h-6 hover:text-indigo-400 transition-colors cursor-pointer" />
+            <Zap className="w-6 h-6 hover:text-pink-400 transition-colors cursor-pointer" />
           </div>
-          <p className="text-[12px] font-black text-slate-700 uppercase tracking-[0.8em] mb-8">
+          <p className="text-[12px] font-black text-purple-300/40 uppercase tracking-[0.8em] mb-8">
             PurFerme Identity
           </p>
-          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-indigo-900 to-transparent mx-auto mb-10" />
-          <div className="space-y-2 opacity-30">
-            <p className="text-[10px] text-indigo-200 uppercase font-black tracking-widest">Ledger Code: {data.batch_code}</p>
-            <p className="text-[8px] text-slate-500 uppercase font-bold tracking-[0.2em]">© 2026 PURFERME ORGANICS LTD</p>
+          <div className="w-12 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 mx-auto mb-10 opacity-50" />
+          <div className="space-y-2 opacity-40">
+            <p className="text-[10px] text-indigo-300 uppercase font-black tracking-widest">Protocol Ledger: {data.batch_code}</p>
+            <p className="text-[8px] text-slate-500 uppercase font-bold tracking-[0.2em]">© 2026 PURFERME ORGANICS LIMITED</p>
           </div>
         </footer>
       </section>
